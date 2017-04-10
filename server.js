@@ -62,10 +62,10 @@ app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
-  let newTask = req.body.task;
-  let newDescription = req.body.description;
-  let lastItemId = todos[todos.length-1]._id;
-  let newTodoId = lastItemId + 1;
+  const newTask = req.body.task;
+  const newDescription = req.body.description;
+  const lastItemId = todos[todos.length-1]._id;
+  const newTodoId = lastItemId + 1;
 
   console.log('NEW ID: ' + newTodoId);
 
@@ -85,8 +85,8 @@ app.get('/api/todos/:id', function show(req, res) {
   /* This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
-  let reqId = req.params.id;
-  let emptyTodo = {
+  const reqId = req.params.id;
+  const emptyTodo = {
     _id: null,
     task: '',
     description: ''
@@ -130,7 +130,7 @@ app.delete('/api/todos/:id', function destroy(req, res) {
    * with deleted todo.
    */
 
-  let reqId = req.params.id;
+  const reqId = req.params.id;
 
   for (i = 0; i < todos.length; i++) {
     if (reqId == todos[i]._id) {
