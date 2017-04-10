@@ -62,6 +62,23 @@ app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
+  let newTask = req.body.task;
+  let newDescription = req.body.description;
+  let lastItemId = todos[todos.length-1]._id;
+  let newTodoId = lastItemId + 1;
+
+  console.log('NEW ID: ' + newTodoId);
+
+  let todo = {
+    _id: newTodoId,
+    'task': newTask,
+    description: newDescription
+  };
+  todos.push(todo);
+  res.json(todo);
+
+  console.log('todos array: ' + JSON.stringify(todos));
+
 });
 
 app.get('/api/todos/:id', function show(req, res) {
@@ -69,7 +86,12 @@ app.get('/api/todos/:id', function show(req, res) {
    * id specified in the route parameter (:id)
    */
   let reqId = req.params.id;
-  let todo = {};
+  let emptyTodo = {
+    _id: null,
+    task: '',
+    description: ''
+  };
+  let todo = emptyTodo;
 
   for (i = 0; i < todos.length; i++) {
     if (reqId == todos[i]._id) {
@@ -77,7 +99,7 @@ app.get('/api/todos/:id', function show(req, res) {
       todo = todos[i];
     }
   } 
-  res.json({todo});
+  res.json(todo);
   console.log(JSON.stringify(todo));
 });
 
@@ -85,7 +107,9 @@ app.put('/api/todos/:id', function update(req, res) {
   /* This endpoint will update a single todo with the
    * id specified in the route parameter (:id) and respond
    * with the newly updated todo.
-   */ 
+   */
+
+    
 });
 
 app.delete('/api/todos/:id', function destroy(req, res) {
@@ -93,6 +117,16 @@ app.delete('/api/todos/:id', function destroy(req, res) {
    * id specified in the route parameter (:id) and respond
    * with deleted todo.
    */
+
+  let reqId = req.params.id;
+
+  for (i = 0; i < todos.length; i++) {
+    if (reqId == todos[i]._id) {
+      todo = todos[i];
+      todos.splice(i,1);
+    }
+  }
+  res.json(todo);
 });
 
 /**********
